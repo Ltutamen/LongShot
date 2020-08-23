@@ -2,6 +2,7 @@ package org.ua.axiom.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class AppSettings {
@@ -12,6 +13,12 @@ public class AppSettings {
 
     private int captureSizeX = 1280;
     private int captureSizeY = 800;
+
+    private int shiftSelectWindowSizeX = 1280;
+    private int shiftSelectWindowSizeY = 1024;
+
+    private Optional<Integer> pixelShift = Optional.empty();
+    private int captionsLimit = Integer.MAX_VALUE;
 
     private int wheelScrollsPerShot = 1;
 
@@ -24,6 +31,11 @@ public class AppSettings {
         ARGUMENT_TO_PARAM_MAPPING.put('y', this::setCaptureSizeY);
         ARGUMENT_TO_PARAM_MAPPING.put('p', this::setPathToSave);
         ARGUMENT_TO_PARAM_MAPPING.put('w', this::setWheelScrollsPerCapture);
+        ARGUMENT_TO_PARAM_MAPPING.put('f', this::setShiftSelectWindowSizeX);
+        ARGUMENT_TO_PARAM_MAPPING.put('g', this::setShiftSelectWindowSizeY);
+        ARGUMENT_TO_PARAM_MAPPING.put('s', this::setPixelShift);
+        ARGUMENT_TO_PARAM_MAPPING.put('l', this::setCaptionsLimit);
+
     }
 
     public AppSettings(String[] args) {
@@ -84,5 +96,37 @@ public class AppSettings {
 
     public void setWheelScrollsPerCapture(String wheelScrollsPerShot) {
         this.wheelScrollsPerShot = Integer.parseInt(wheelScrollsPerShot);
+    }
+
+    public int getShiftSelectWindowSizeX() {
+        return shiftSelectWindowSizeX;
+    }
+
+    public void setShiftSelectWindowSizeX(String shiftSelectWindowSizeX) {
+        this.shiftSelectWindowSizeX = Integer.parseInt(shiftSelectWindowSizeX);
+    }
+
+    public int getShiftSelectWindowSizeY() {
+        return shiftSelectWindowSizeY;
+    }
+
+    public void setShiftSelectWindowSizeY(String shiftSelectWindowSizeY) {
+        this.shiftSelectWindowSizeY = Integer.parseInt(shiftSelectWindowSizeY);
+    }
+
+    public Optional<Integer> getPixelShift() {
+        return pixelShift;
+    }
+
+    public void setPixelShift(String pixelShift) {
+        this.pixelShift = Optional.of(Integer.parseInt(pixelShift));
+    }
+
+    public int getCaptionsLimit() {
+        return captionsLimit;
+    }
+
+    public void setCaptionsLimit(String captionsLimit) {
+        this.captionsLimit = Integer.parseInt(captionsLimit);
     }
 }

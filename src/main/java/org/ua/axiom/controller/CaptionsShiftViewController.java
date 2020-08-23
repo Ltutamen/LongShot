@@ -1,5 +1,6 @@
 package org.ua.axiom.controller;
 
+import org.ua.axiom.model.AppSettings;
 import org.ua.axiom.model.ConcatenateCapsModel;
 import org.ua.axiom.view.ConcatenateCapsView;
 
@@ -11,10 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 public class CaptionsShiftViewController {
-    private ConcatenateCapsModel model;
+    private final ConcatenateCapsModel model;
     private ConcatenateCapsView view;
 
-    public CaptionsShiftViewController(List<BufferedImage> screenCaps) {
+    public CaptionsShiftViewController(List<BufferedImage> screenCaps, AppSettings settings) {
         model = new ConcatenateCapsModel(screenCaps);
 
         KeyAdapter keyAdapter = new KeyAdapter() {
@@ -42,8 +43,7 @@ public class CaptionsShiftViewController {
             }
         };
 
-        //  todo read size from appSettings
-        view = new ConcatenateCapsView(keyAdapter, 1280, 800);
+        view = new ConcatenateCapsView(keyAdapter, settings.getShiftSelectWindowSizeX(), settings.getShiftSelectWindowSizeY());
         render();
     }
 

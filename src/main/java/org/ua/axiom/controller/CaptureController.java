@@ -15,6 +15,7 @@ public class CaptureController {
     private final int captureDelay;
     private final int captureWight;
     private final int captureHigh;
+    private final int captionsQuantityLimit;
 
     public CaptureController(AppSettings settings) {
         this.delay = settings.getDelayBetweenCapturesMsecs();
@@ -22,6 +23,7 @@ public class CaptureController {
         this.captureWight = settings.getCaptureSizeX();
         this.captureHigh = settings.getCaptureSizeY();
         this.wheelScrollsPerCapture = settings.getWheelScrollsPerCapture();
+        this.captionsQuantityLimit = settings.getCaptionsLimit();
     }
 
     public List<BufferedImage> run() {
@@ -36,7 +38,7 @@ public class CaptureController {
 
             for (
                     BufferedImage prevImage = null, currentImage = robot.createScreenCapture(captureRect);
-                    !bufferedImagesEquals(currentImage, prevImage);
+                    !bufferedImagesEquals(currentImage, prevImage) || screenCaps.size() == captionsQuantityLimit;
                     currentImage = robot.createScreenCapture(captureRect)) {
                 prevImage = currentImage;
                 screenCaps.add(prevImage);

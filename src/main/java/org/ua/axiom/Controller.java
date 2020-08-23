@@ -1,9 +1,6 @@
 package org.ua.axiom;
 
-import org.ua.axiom.controller.CaptionsSaveController;
-import org.ua.axiom.controller.CaptureController;
-import org.ua.axiom.controller.CaptionsShiftViewController;
-import org.ua.axiom.controller.ConcatenateCapsController;
+import org.ua.axiom.controller.*;
 import org.ua.axiom.model.AppSettings;
 
 import java.awt.image.BufferedImage;
@@ -18,8 +15,14 @@ public class Controller {
 
     public void run() {
         List<BufferedImage> screenCaps = new CaptureController(settings).run();
-        int shift = new CaptionsShiftViewController(screenCaps).run();
+        int shift = settings
+                .getPixelShift()
+                .orElseGet(
+                        () -> new CaptionsShiftViewController(screenCaps, settings)
+                                .run());
         List<BufferedImage> concatenatedCaptions = new ConcatenateCapsController(screenCaps, shift).run();
         new CaptionsSaveController(concatenatedCaptions, settings.getPathToSave()).run();
+
+        AdviceProviderController.createAdvice(settings, shift);
     }
 }
